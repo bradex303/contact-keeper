@@ -92,7 +92,6 @@ router.put('/:id', auth, async (req, res) => {
     );
     res.json(contact);
   } catch (err) {
-    console.error('wtf', err.message);
     res.status(500).send('Server Error');
   }
 });
