@@ -17,7 +17,6 @@ router.get('/', auth, async (req, res) => {
     });
     res.json(contacts);
   } catch (err) {
-    console.error(err.message);
     res.status(500).send('Server Errror');
   }
 });
@@ -54,7 +53,6 @@ router.post(
       const contact = await newContact.save();
       res.send(contact);
     } catch (err) {
-      console.error(err.message);
       res.status(500).send('Server Error');
     }
   }
@@ -99,10 +97,9 @@ router.put('/:id', auth, async (req, res) => {
 // @route		DELETE api/contacts/:id
 // @desc		Delete contact
 // @access	private
-router.delete('/', auth, async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     let contact = await Contact.findById(req.params.id);
-
     if (!contact) {
       return res.status(404).json({ msg: 'Contact not found' });
     }
@@ -115,7 +112,6 @@ router.delete('/', auth, async (req, res) => {
     await Contact.findByIdAndRemove(req.params.id);
     res.json({ msg: 'Contact removed' });
   } catch (err) {
-    console.error('wtf', err.message);
     res.status(500).send('Server Error');
   }
 });
